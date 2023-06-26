@@ -45,7 +45,44 @@ module.exports = {
       console.log(err)
       res.status(500).json(err);
     }
-  }
+  },
   // Update a thought
+  async updateThought(req, res) {
+    try {
+      const updatedThought = await Thought.findOneAndUpdate(
+        { _id: req.params.thoughtId },
+        { $set: req.body },
+        { new: true }
+      );
+
+      if (!updatedThought) {
+        return res.status(404).json({ message: 'No thought with that ID' });
+      }
+
+      res.json(updatedThought);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  },
   // Delete a thought
+  async deleteThought(req, res) {
+    try {
+      const deletedThought = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
+
+      if (!deletedThought) {
+        return res.status(404).json({ message: 'No thought with that ID' });
+      }
+
+      await User.updateOne(
+        { _id: deletedThought.userId },
+        { $pull: { thoughts: deletedThought._id } }
+      );
+
+      res.json({ message: 'Thought deleted successfully' });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  }
 };
