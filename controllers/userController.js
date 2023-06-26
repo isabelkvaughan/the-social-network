@@ -104,6 +104,37 @@ module.exports = {
     }
   },
 
-  // Delete a friend
+ // Delete a friend from a user
+  async deleteFriend(req, res) {
+    try {
+      const { userId, friendId } = req.params;
 
+      // Update user A's friends list
+      const updatedUserA = await User.findOneAndUpdate(
+        { _id: userId },
+        { $pull: { friends: friendId } }, // Remove friend B from user A's friends list
+        { new: true }
+      );
+
+      if (!updatedUserA) {
+        return res.status(404).json({ message: 'No user found with that ID' });
+      }
+
+      // Update user B's friends list
+      const updatedUserB = await User.findOneAndUpdate(
+        { _id: friendId },
+        { $pull: { friends: userId } }, // Remove friend A from user B's friends list
+        { new: true }
+      );
+
+      if (!updatedUserB) {
+        return res.status(404).json({ message: 'No friend found with that ID' });
+      }
+
+      res.json(updatedUserA);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  }
 };
