@@ -30,7 +30,15 @@ const reactionSchema = new Schema({
       });
     },
   },
-});
+},
+{
+  toJSON: {
+    getters: true,
+    versionKey: false,
+  },
+  id: false,
+}
+);
 
 // Schema to create Thought model
 const thoughtSchema = new Schema({

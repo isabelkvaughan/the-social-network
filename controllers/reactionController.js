@@ -31,7 +31,7 @@ module.exports = {
 
       const updatedThought = await Thought.findOneAndUpdate(
         { _id: thoughtId },
-        { $pull: { reactions: { _id: reactionId } } },
+        { $pull: { reaction: { reactionId: reactionId } } },
         { new: true }
       );
 
