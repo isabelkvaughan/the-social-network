@@ -75,6 +75,11 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
     - DELETE (Delete reaction)
     - ![Delete reaction route](./public/images/screenshot-deletereaction.png)
     
+## Mockup
+The following video shows an example of the Social Network API being operated from the Comand Line and Insomnia:
+
+[A video shows the Social Network API being operated from the Comand Line and Insomnia.](https://drive.google.com/file/d/1DCbxPjKqxbKYuRV3mzuYkadEhyYcL5Ii/view?usp=sharing)
+
 ## Contact
 
 Isabel Vaughan
